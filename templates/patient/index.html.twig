@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+
+    <div class="example-wrapper">
+        <h3>Liste des patients </h3>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Numero tel.</th>
+                <th scope="col">Email</th>
+                <th scope="col">Type Assurance</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in patients %}
+                <tr>
+                    <td>{{item.getId()}}</td>
+                    <td>{{item.getNom()}}</td>
+                    <td>{{item.getAdress()}}</td>
+                    <td>{{item.getNumerotel()}}</td>
+                    <td>{{item.getEmail()}}</td>
+                    <td>{{item.getType()}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="8" class="text-center"> <h5><a href="/patient/ajouter">Ajouter Patient</a> </h5> </td>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+{% endblock %}

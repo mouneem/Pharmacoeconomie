@@ -1,0 +1,2643 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<div class="example-wrapper">
+    <h2>Questionaire: Coûts directs de la maladie au cours de ces derniers 6 mois </h2>
+
+    <p>
+        Veuiller remplir  les champs avec les infromations du patient
+    </p>
+
+    <form method="post" action="/survey/coutdirect/calcul">
+        <div class="form-group">
+            <label>Patient</label>
+            <select name="patient_id" class="form-control" id="patient_id">
+                {% for item in patients %}
+                    <option value="{{ item.id }}">{{ item.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <hr>
+        <div class="form-group" >
+            <h4 >1.Consultations:</h4>
+        </div>
+        <div class="form-group" >
+            <h5> 1.1 Consultations Privées: </h5>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">Rhumatologue</div>
+                <div class="col-2 text-right"><label>Consultation</label></div>
+                <div class="col-2">
+                    <input name="Privees_RhumatologueConsultationNombre" type="number" value="0" class="form-control">
+                </div>
+                <div class="col-2 text-right"><label>Prix</label></div>
+                <div class="col-2">
+                    <input name="Privees_RhumatologueConsultationPrix" type="number" value="0" class="form-control">
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">Internist</div>
+                <div class="col-2 text-right"><label>Consultation</label></div>
+                <div class="col-2">
+                    <input name="Privees_InternistConsultationNombre" type="number" value="0" class="form-control">
+                </div>
+                <div class="col-2 text-right"><label>Prix</label></div>
+                <div class="col-2">
+                    <input name="Privees_InternistConsultationPrix" type="number" value="0" class="form-control">
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">Generaliste</div>
+                <div class="col-2 text-right"><label>Consultation</label></div>
+                <div class="col-2">
+                    <input name="Privees_GeneralisteConsultationNombre" type="number" value="0" class="form-control">
+                </div>
+                <div class="col-2 text-right"><label>Prix</label></div>
+                <div class="col-2">
+                    <input name="Privees_GeneralisteConsultationPrix" type="number" value="0" class="form-control">
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">Autres</div>
+                <div class="col-2 text-right"><label>Consultation</label></div>
+                <div class="col-2">
+                    <input name="Privees_AutresConsultationNombre" type="number" value="0" class="form-control">
+                </div>
+                <div class="col-2 text-right"><label>Prix</label></div>
+                <div class="col-2">
+                    <input name="Privees_AutresConsultationPrix" type="number" value="0" class="form-control">
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">Remboursé</div>
+                <div class="col-8">
+                    <select class="form-control" name="Privees_rembourse_consultation" id="">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coûtdes consultations en privépayé par patient après remboursemen</div>
+                <div class="col-4">
+                    <input type="number" value="0" class="form-control" name="Privees_rembourse_consultation_cout" id="" />
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group" >
+            <h5> 1.2 Consultations Publics: </h5>
+        </div>
+        <div class="form-group" >
+            <h6 class="text-primary"> 1.2.1 Consultations Mutualistes (CNSS/CNOPS/FAR): </h6>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Rhumatologue /Résident</div>
+                <div class="col-2"><label for="">Nb Consultation</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="Consultation_Publics_Mut_Rhumato_consultation" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="75" class="form-control" name="Consultation_Publics_Mut_Rhumato_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Professeur</div>
+                <div class="col-2"><label for="">Nb Consultation</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="Consultation_Publics_Mut_Professeur_consultation" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="100" class="form-control" name="Consultation_Publics_Mut_Professeur_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Généraliste</div>
+                <div class="col-2"><label for="">Nb Consultation</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="Consultation_Publics_Mut_Generaliste_consultation" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="50" class="form-control" name="Consultation_Publics_Mut_Generaliste_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Psychiatre</div>
+                <div class="col-2"><label for="">Nb Consultation</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="Consultation_Publics_Mut_Psychiatre_consultation" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="100" class="form-control" name="Consultation_Publics_Mut_Psychiatre_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group" >
+            <h6 class="text-primary"> 1.2.2 Payant /Ramedistes: </h6>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Rhumatologue /Résident</div>
+                <div class="col-2"><label for="">Nb Consultation</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="Consultation_Publics_Pay_Rhumato_consultation" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="60" class="form-control" name="Consultation_Publics_Pay_Rhumato_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Professeur</div>
+                <div class="col-2"><label for="">Nb Consultation</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="Consultation_Publics_Pay_Professeur_consultation" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="100" class="form-control" name="Consultation_Publics_Pay_Professeur_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Généraliste</div>
+                <div class="col-2"><label for="">Nb Consultation</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="Consultation_Publics_Pay_Generaliste_consultation" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="40" class="form-control" name="Consultation_Publics_Pay_Generaliste_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Psychiatre</div>
+                <div class="col-2"><label for="">Nb Consultation</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="Consultation_Publics_Pay_Psychiatre_consultation" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="100" class="form-control" name="Consultation_Publics_Pay_Psychiatre_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coûtdes consultations en Pc payé par patient:</div>
+                <div class="col-4">
+                    <input type="number" value="0" class="form-control" name="Consultation_Publics_Pay_par_patient" id="" />
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        {#        Hospitalisation           #}
+
+        <div class="form-group" >
+            <h4 >2. Hospitalisations:</h4>
+        </div>
+
+        <div class="form-group" >
+            <h5> 2.1 Hospitalisations Au sein de l’HEY ou toute autre structure Public: </h5>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Motif de l’hospitalisation</div>
+                <div class="col-6">
+                    <select name="hospitalisation_motif_pub" class="form-control">
+                        <option>Biothérapie</option>
+                        <option>Poussée</option>
+                        <option>Autres</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Coût d’hospitalisation des Jours:</div>
+                <div class="col-2">
+                    <label for="">Nombre</label>
+                </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="hospitalisation_public_jour_nb" id="" />
+                </div>
+                <div class="col-2">
+                    <label for="">Prix</label>
+                </div>
+                <div class="col-2">
+                    <input type="number" value="180" class="form-control" name="hospitalisation_public_jour_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Coût d’hospitalisation des Nuit:</div>
+                <div class="col-2">
+                    <label for="">Nombre</label>
+                </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="hospitalisation_public_nuit_nb" id="" />
+                </div>
+                <div class="col-2">
+                    <label for="">Prix</label>
+                </div>
+                <div class="col-2">
+                    <input type="number" value="550" class="form-control" name="hospitalisation_public_nuit_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-5">Coûtdes hospitalisationsen Pc payé par patient:</div>
+                <div class="col-6">
+                    <input type="number" value="0" class="form-control" name="hospitalisation_public_cout_paye_par_pat" id="" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group" >
+            <h5> 2.2 Hospitalisations Au sein d’une clinique privée: </h5>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Motif de l’hospitalisation</div>
+                <div class="col-6">
+                    <select name="hospitalisation_motif_prv" class="form-control">
+                        <option>Biothérapie</option>
+                        <option>Poussée</option>
+                        <option>Autres</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Coût d’hospitalisation des Jours:</div>
+                <div class="col-2">
+                    <label for="">Nombre</label>
+                </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="hospitalisation_prv_jour_nb" id="" />
+                </div>
+                <div class="col-2">
+                    <label for="">Prix</label>
+                </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="hospitalisation_prv_jour_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Coût d’hospitalisation des Nuit:</div>
+                <div class="col-2">
+                    <label for="">Nombre</label>
+                </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="hospitalisation_prv_nuit_nb" id="" />
+                </div>
+                <div class="col-2">
+                    <label for="">Prix</label>
+                </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="hospitalisation_prv_nuit_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">Remboursé</div>
+                <div class="col-8">
+                    <select class="form-control" name="hospitalsation_prv_rembourse" id="">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coût de l’hospitalisation en privé payé par patient</div>
+                <div class="col-4">
+                    <input type="number" value="0" class="form-control" name="hospitalsation_prv_rembourse_prix_paye_par_patient" id="" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group" >
+            <h4 >3. Bilans Radiologiques/ Echographie /IRM/Scanne:</h4>
+        </div>
+
+        <div class="form-group" >
+            <h5> 3.1 Bilans Radiologiques/ Echographie /IRM/Scanne Au sein d'une structure Public: </h5>
+        </div>
+        <div class="form-group text-primary" >
+            <h5> 3.1.1 Mutualistes (CNSS/CNOPS/FAR: </h5>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Main (F+P):  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_main_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="135" class="form-control" name="bilan_pub_mut_main_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Poignet:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Poignet_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="135" class="form-control" name="bilan_pub_mut_Poignet_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Coude:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Coude_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="135" class="form-control" name="bilan_pub_mut_Coude_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Cheville:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Cheville_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="135" class="form-control" name="bilan_pub_mut_Cheville_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Jambe:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Jambe_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="135" class="form-control" name="bilan_pub_mut_Jambe_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Genou:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Genou_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="135" class="form-control" name="bilan_pub_mut_Genou_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Cuisse:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Cuisse_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="135" class="form-control" name="bilan_pub_mut_Cuisse_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Pied F+P:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Pied_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="135" class="form-control" name="bilan_pub_mut_Pied_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Hanche:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Hanche_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="135" class="form-control" name="bilan_pub_mut_Hanche_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Bassin:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Bassin_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="135" class="form-control" name="bilan_pub_mut_Bassin_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Rachis_D:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Rachis_D_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="90" class="form-control" name="bilan_pub_mut_Rachis_D_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Rachis_L:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Rachis_L_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="90" class="form-control" name="bilan_pub_mut_Rachis_L_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Epaule:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Epaule_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="80" class="form-control" name="bilan_pub_mut_Epaule_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Poumon:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Poumon_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="144" class="form-control" name="bilan_pub_mut_Poumon_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">DMO_Non_Remboursalbe:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_DMO_Non_Remboursalbe_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="420" class="form-control" name="bilan_pub_mut_DMO_Non_Remboursalbe_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Echographie_Main:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Echographie_Main_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="200" class="form-control" name="bilan_pub_mut_Echographie_Main_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Echographie_Peid:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Echographie_Peid_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="200" class="form-control" name="bilan_pub_mut_Echographie_Peid_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Echographie_enthese:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Echographie_enthese_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="200" class="form-control" name="bilan_pub_mut_Echographie_enthese_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Echographie_Hanche:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Echographie_Hanche_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="200" class="form-control" name="bilan_pub_mut_Echographie_Hanche_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">IRM:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_IRM_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="2000" class="form-control" name="bilan_pub_mut_IRM_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Scanner:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_mut_Scanner_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="900" class="form-control" name="bilan_pub_mut_Scanner_prix" id="" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group text-primary" >
+            <h5> 3.1.2 Payant /Ramedistes: </h5>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Main (F+P):  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_main_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="112.5" class="form-control" name="bilan_pub_pay_main_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Poignet:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Poignet_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="112.5" class="form-control" name="bilan_pub_pay_Poignet_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Coude:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Coude_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="112.5" class="form-control" name="bilan_pub_pay_Coude_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Cheville:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Cheville_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="112.5" class="form-control" name="bilan_pub_pay_Cheville_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Jambe:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Jambe_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="112.5" class="form-control" name="bilan_pub_pay_Jambe_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Genou:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Genou_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="112.5" class="form-control" name="bilan_pub_pay_Genou_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Cuisse:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Cuisse_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="112.5" class="form-control" name="bilan_pub_pay_Cuisse_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Pied F+P:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Pied_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="112.5" class="form-control" name="bilan_pub_pay_Pied_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Hanche:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Hanche_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="112.5" class="form-control" name="bilan_pub_pay_Hanche_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Bassin:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Bassin_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="112.5" class="form-control" name="bilan_pub_pay_Bassin_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Rachis_D:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Rachis_D_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="75" class="form-control" name="bilan_pub_pay_Rachis_D_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Rachis_L:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Rachis_L_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="75" class="form-control" name="bilan_pub_pay_Rachis_L_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Epaule:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Epaule_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="75" class="form-control" name="bilan_pub_pay_Epaule_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Poumon:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Poumon_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="120" class="form-control" name="bilan_pub_pay_Poumon_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">DMO_Non_Remboursalbe:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_DMO_Non_Remboursalbe_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="420" class="form-control" name="bilan_pub_pay_DMO_Non_Remboursalbe_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Echographie_Main:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Echographie_Main_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="200" class="form-control" name="bilan_pub_pay_Echographie_Main_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Echographie_Peid:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Echographie_Peid_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="200" class="form-control" name="bilan_pub_pay_Echographie_Peid_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Echographie_enthese:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Echographie_enthese_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="200" class="form-control" name="bilan_pub_pay_Echographie_enthese_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Echographie_Hanche:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Echographie_Hanche_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="200" class="form-control" name="bilan_pub_pay_Echographie_Hanche_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">IRM:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_IRM_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="3000" class="form-control" name="bilan_pub_pay_IRM_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Scanner:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_pub_pay_Scanner_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="750" class="form-control" name="bilan_pub_pay_Scanner_prix" id="" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group" >
+            <h5> 3.2 Bilans Radiologiques/ Echographie /IRM/Scanne au sein d’une structure privée : </h5>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Main (F+P):  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_main_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="150" class="form-control" name="bilan_prv_main_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Poignet:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Poignet_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="150" class="form-control" name="bilan_prv_Poignet_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Coude:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Coude_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="150" class="form-control" name="bilan_prv_Coude_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Cheville:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Cheville_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="150" class="form-control" name="bilan_prv_Cheville_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Jambe:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Jambe_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="150" class="form-control" name="bilan_prv_Jambe_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Genou:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Genou_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="150" class="form-control" name="bilan_prv_Genou_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Cuisse:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Cuisse_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="150" class="form-control" name="bilan_prv_Cuisse_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Pied F+P:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Pied_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="150" class="form-control" name="bilan_prv_Pied_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Hanche:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Hanche_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="150" class="form-control" name="bilan_prv_Hanche_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Bassin:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Bassin_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="150" class="form-control" name="bilan_prv_Bassin_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Rachis_D:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Rachis_D_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="100" class="form-control" name="bilan_prv_Rachis_D_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Rachis_L:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Rachis_L_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="100" class="form-control" name="bilan_prv_Rachis_L_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Epaule:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Epaule_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="80" class="form-control" name="bilan_prv_Epaule_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Poumon:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Poumon_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="160" class="form-control" name="bilan_prv_Poumon_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">DMO_Non_Remboursalbe:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_DMO_Non_Remboursalbe_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_DMO_Non_Remboursalbe_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Echographie_Main:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Echographie_Main_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Echographie_Main_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Echographie_Peid:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Echographie_Peid_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Echographie_Peid_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Echographie_enthese:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Echographie_enthese_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Echographie_enthese_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Echographie_Hanche:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Echographie_Hanche_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Echographie_Hanche_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">IRM:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_IRM_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_IRM_prix" id="" />
+                </div>
+            </div>
+            <div class="row item-hover">
+                <div class="col-3">Scanner:  </div>
+                <div class="col-2"><label for="">Nb. </label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Scanner_nb" id="" />
+                </div>
+                <div class="col-2"><label for="">Prix</label> </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="bilan_prv_Scanner_prix" id="" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row item-hover">
+                    <div class="col-2">Remboursé</div>
+                    <div class="col-8">
+                        <select class="form-control" name="bilan_prv_Scanner_rembourse" id="">
+                            <option value="Oui">Oui</option>
+                            <option value="Non">Non</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row item-hover">
+                    <div class="col-6">Coût des Rx réalisées en privé payé par patient </div>
+                    <div class="col-4">
+                        <input type="number" value="0" class="form-control" name="bilan_prv_Scanner_rembourse_prix" id="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h5> 3.3 Bilan biologiques au sein d’une structure publique : </h5>
+        <h6 class="text-primary"> 3.3.1 Mutualistes (CNSS/CNOPS/FAR): </h6>
+        <div class="row item-hover">
+            <div class="col-3">ASAT:  </div>
+            <div class="col-2"><label for="">Nb. </label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_ASAT_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_ASAT_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">ALAT:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_ALAT_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_ALAT_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Albumine:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Albumine_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Albumine_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">AntiCCP:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_AntiCCP_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_AntiCCP_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">AAN:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_AAN_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_AAN_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">AntiECT:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_AntiECT_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_AntiECT_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">ACPA:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_ACPA_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_ACPA_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">CholesterolTotal:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_CholesterolTotal_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_CholesterolTotal_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">ECBU:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_ECBU_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_ECBU_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">FR:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_FR_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_FR_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HDL:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HDL_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HDL_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">LDL:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_LDL_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_LDL_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Triglycerides:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Triglycerides_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Triglycerides_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Creatinine:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Creatinine_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Creatinine_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Dosage_des_IgA_IgGIgM:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Dosage_des_IgA_IgGIgM_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Dosage_des_IgA_IgGIgM_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">EPP:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_EPP_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_EPP_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">GGT:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_GGT_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_GGT_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Glycemie:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Glycemie_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Glycemie_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HbA1C:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HbA1C_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HbA1C_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HVA:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HVA_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HVA_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HVBAgHBS:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HVBAgHBS_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HVBAgHBS_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HV_AcHBC:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HV_AcHBC_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HV_AcHBC_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HVC:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HVC_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HVC_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HIV:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HIV_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HIV_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HLA_B27:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HLA_B27_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_HLA_B27_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Ionogramme:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Ionogramme_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Ionogramme_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">IDR:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_IDR_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_IDR_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">PAL:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_PAL_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_PAL_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">VS:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_VS_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_VS_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">CRP:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_CRP_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_CRP_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">NFS:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_NFS_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_NFS_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Quantiferon:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Quantiferon_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_mut_Quantiferon_prix" id="" />
+            </div>
+        </div>
+
+        <h6 class="text-primary"> 3.3.2 Payant /Ramedistes: </h6>
+        <div class="row item-hover">
+            <div class="col-3">ASAT:  </div>
+            <div class="col-2"><label for="">Nb. </label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_ASAT_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_ASAT_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">ALAT:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_ALAT_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_ALAT_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Albumine:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Albumine_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Albumine_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">AntiCCP:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_AntiCCP_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_AntiCCP_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">AAN:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_AAN_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_AAN_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">AntiECT:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_AntiECT_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_AntiECT_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">ACPA:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_ACPA_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_ACPA_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">CholesterolTotal:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_CholesterolTotal_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_CholesterolTotal_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">ECBU:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_ECBU_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_ECBU_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">FR:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_FR_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_FR_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HDL:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HDL_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HDL_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">LDL:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_LDL_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_LDL_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Triglycerides:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Triglycerides_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Triglycerides_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Creatinine:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Creatinine_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Creatinine_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Dosage_des_IgA_IgGIgM:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Dosage_des_IgA_IgGIgM_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Dosage_des_IgA_IgGIgM_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">EPP:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_EPP_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_EPP_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">GGT:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_GGT_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_GGT_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Glycemie:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Glycemie_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Glycemie_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HbA1C:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HbA1C_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HbA1C_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HVA:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HVA_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HVA_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HVBAgHBS:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HVBAgHBS_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HVBAgHBS_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HV_AcHBC:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HV_AcHBC_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HV_AcHBC_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HVC:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HVC_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HVC_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HIV:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HIV_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HIV_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HLA_B27:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HLA_B27_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_HLA_B27_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Ionogramme:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Ionogramme_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Ionogramme_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">IDR:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_IDR_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_IDR_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">PAL:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_PAL_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_PAL_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">VS:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_VS_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_VS_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">CRP:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_CRP_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_CRP_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">NFS:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_NFS_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_NFS_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Quantiferon:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Quantiferon_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_Pay_Quantiferon_prix" id="" />
+            </div>
+        </div>
+        <div class="row item-hover">
+            <div class="col-6">Coûtdes bilans réalisés en pblic payé par patient:  </div>
+            <div class="col-4">
+                <input type="number" value="0" class="form-control" name="bilan_bio_public_prix" id="" />
+            </div>
+        </div>
+
+
+
+        <h6 class="text-primary"> 3.4 Bilans Biologiques au sein d’une structure privée: </h6>
+        <div class="row item-hover">
+            <div class="col-3">ASAT:  </div>
+            <div class="col-2"><label for="">Nb. </label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_ASAT_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_ASAT_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">ALAT:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_ALAT_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_ALAT_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Albumine:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Albumine_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Albumine_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">AntiCCP:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_AntiCCP_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_AntiCCP_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">AAN:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_AAN_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_AAN_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">AntiECT:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_AntiECT_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_AntiECT_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">ACPA:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_ACPA_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_ACPA_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">CholesterolTotal:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_CholesterolTotal_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_CholesterolTotal_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">ECBU:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_ECBU_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_ECBU_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">FR:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_FR_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_FR_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HDL:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HDL_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HDL_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">LDL:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_LDL_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_LDL_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Triglycerides:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Triglycerides_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Triglycerides_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Creatinine:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Creatinine_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Creatinine_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Dosage_des_IgA_IgGIgM:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Dosage_des_IgA_IgGIgM_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Dosage_des_IgA_IgGIgM_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">EPP:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_EPP_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_EPP_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">GGT:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_GGT_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_GGT_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Glycemie:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Glycemie_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Glycemie_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HbA1C:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HbA1C_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HbA1C_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HVA:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HVA_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HVA_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HVBAgHBS:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HVBAgHBS_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HVBAgHBS_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HV_AcHBC:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HV_AcHBC_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HV_AcHBC_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HVC:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HVC_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HVC_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HIV:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HIV_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HIV_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">HLA_B27:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HLA_B27_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_HLA_B27_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Ionogramme:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Ionogramme_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Ionogramme_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">IDR:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_IDR_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_IDR_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">PAL:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_PAL_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_PAL_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">VS:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_VS_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_VS_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">CRP:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_CRP_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_CRP_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">NFS:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_NFS_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_NFS_prix" id="" />
+            </div>
+        </div>       <div class="row item-hover">
+            <div class="col-3">Quantiferon:  </div>
+            <div class="col-2"><label for="">Nb.</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Quantiferon_nb" id="" />
+            </div>
+            <div class="col-2"><label for="">Prix</label> </div>
+            <div class="col-2">
+                <input type="number" value="0" class="form-control" name="bilan_prv_Quantiferon_prix" id="" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">Remboursé</div>
+                <div class="col-8">
+                    <select class="form-control" name="Bio_Privees_rembourse" id="">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coût des bilans réalisés en privé payé par patient</div>
+                <div class="col-4">
+                    <input type="number" value="0" class="form-control" name="Bio_Privees_rembourse_prix" id="" />
+                </div>
+            </div>
+        </div>
+
+        <HR>
+
+
+
+
+        <div class="form-group" >
+            <h4 >4. Traitements médicaux:</h4>
+        </div>
+
+        <div class="form-group" >
+            <h5> 4.1 DMARDs: </h5>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">DMARDs</div>
+                <div class="col-8">
+                    <select class="form-control" name="trt_mdc_dmdrs" id="">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row item-hover">
+                    <div class="col-12">Si oui</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row item-hover">
+                    <div class="col-3"> Nom desspécialité</div>
+                    <div class="col-6">
+                        <input type="text"  placeholder="Text ici" class="form-control" name="trt_mdc_dmdrs_si_oui" id="" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row item-hover">
+                    <div class="col-3"> Coût d’une seule prise</div>
+                    <div class="col-3">
+                        <input type="Number" value="0" class="form-control" name="trt_mdc_dmdrs_cout_dune_prise" id="" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row item-hover">
+                    <div class="col-3"> Coût mensuel</div>
+                    <div class="col-3">
+                        <input type="Number" value="0" class="form-control" name="trt_mdc_dmdrs_cout_mensuel" id="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">DMARDS Remboursé</div>
+                <div class="col-8">
+                    <select class="form-control" name="trt_mdc_dmdrs_rembourse" id="">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coûtdes consultations en privépayé par patient après remboursemen</div>
+                <div class="col-4">
+                    <input type="number" value="0" class="form-control" name="trt_mdc_dmdrs_rembourse_cout_paye" id="" />
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group" >
+            <h5> 4.2 BBDMARDs: </h5>
+        </div>
+
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">BDMARDs</div>
+                <div class="col-8">
+                    <select class="form-control" name="trt_mdc_bdmdrs" id="">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row item-hover">
+                    <div class="col-12">Si oui</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row item-hover">
+                    <div class="col-3"> Nom desspécialité</div>
+                    <div class="col-6">
+                        <input type="text"  placeholder="Text ici" class="form-control" name="trt_mdc_bdmdrs_si_oui" id="" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row item-hover">
+                    <div class="col-3"> Coût d’une seule prise</div>
+                    <div class="col-3">
+                        <input type="Number" value="0" class="form-control" name="trt_mdc_bdmdrs_cout_dune_prise" id="" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row item-hover">
+                    <div class="col-3"> Coût mensuel</div>
+                    <div class="col-3">
+                        <input type="Number" value="0" class="form-control" name="trt_mdc_bdmdrs_cout_mensuel" id="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">DMARDS Remboursé</div>
+                <div class="col-8">
+                    <select class="form-control" name="trt_mdc_bdmdrs_rembourse" id="">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coûtdes consultations en privépayé par patient après remboursemen</div>
+                <div class="col-4">
+                    <input type="number" value="0" class="form-control" name="trt_mdc_bdmdrs_rembourse_cout_paye" id="" />
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group" >
+            <h5> 4.3 AINS/Antalgiques/ Traitements concomitants/ Autres:: </h5>
+        </div>
+
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom de la spécialité</th>
+                <th scope="col">Fréquence de prise/ semaine</th>
+                <th scope="col">Coût d’une boite</th>
+                <th scope="col">Coût mensuel</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr >
+                <th >1</th>
+                <td>
+                    <input type="text" placeholder="text ici" class="form-control" name="trt_mdc_ains_nom_1" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_frq_1" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_cout_1" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_cout_mns_1" id="" />
+                </td>
+            </tr>
+            <tr >
+                <th >1</th>
+                <td>
+                    <input type="text" placeholder="text ici" class="form-control" name="trt_mdc_ains_nom_1" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_frq_1" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_cout_1" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_cout_mns_1" id="" />
+                </td>
+            </tr>
+            <tr >
+                <th >2</th>
+                <td>
+                    <input type="text" placeholder="text ici" class="form-control" name="trt_mdc_ains_nom_2" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_frq_2" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_cout_2" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_cout_mns_2" id="" />
+                </td>
+            </tr>
+            <tr >
+                <th >3</th>
+                <td>
+                    <input type="text" placeholder="text ici" class="form-control" name="trt_mdc_ains_nom_3" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_frq_3" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_cout_3" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_cout_mns_3" id="" />
+                </td>
+            </tr>
+            <tr >
+                <th >4</th>
+                <td>
+                    <input type="text" placeholder="text ici" class="form-control" name="trt_mdc_ains_nom_4" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_frq_4" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_cout_4" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_cout_mns_4" id="" />
+                </td>
+            </tr>
+            <tr >
+                <th >5</th>
+                <td>
+                    <input type="text" placeholder="text ici" class="form-control" name="trt_mdc_ains_nom_5" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_frq_5" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_cout_5" id="" />
+                </td>
+                <td>
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_cout_mns_5" id="" />
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">Traitements médicaux Remboursé</div>
+                <div class="col-8">
+                    <select class="form-control" name="trt_mdc_ains_rembourse" id="">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coûtdes consultations en privépayé par patient après remboursemen</div>
+                <div class="col-4">
+                    <input type="number" value="0" class="form-control" name="trt_mdc_ains_rembourse_cout_paye" id="" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group" >
+            <h3> 5. Traitements Chirurgicaux: </h3>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2"> Traitements Chirurgicaux</div>
+                <div class="col-8">
+                    <select class="form-control" name=" Traitements_Chirurgicaux_oui_non" id="">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2"> Traitements Chirurgicaux</div>
+                <div class="col-8">
+                    <select class="form-control" name=" Traitements_Chirurgicaux_prv_pblc" id="">
+                        <option value="Public">Public</option>
+                        <option value="Privé">Privé</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nature de l’acte chirurgicale</th>
+                <th scope="col">Type </th>
+                <th scope="col">Lieux de l’acte </th>
+                <th scope="col">Coût totale de l’acte </th>
+                <th scope="col">Date de Réalisation</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for counter in 1..5  %}
+
+                <tr >
+                    <th >{{ counter }}</th>
+                    <td>
+                        <input type="text" placeholder="text ici" class="form-control" name="churg_Nature_{{ counter }}" id="" />
+                    </td>
+                    <td>
+                        <select class="form-control" name="type_chrg_{{ counter }}" id="">
+                            <option value="Privé">Privé</option>
+                            <option value="Publique">Publique</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" placeholder="text ici" class="form-control" name="churg_Lieux_{{ counter }}" id="" />
+                    </td>
+                    <td>
+                        <input type="number" value="0" class="form-control" name="churg_cout_{{ counter }}" id="" />
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" name="churg_date_{{ counter }}" id="" />
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-12">Si en Publique</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coût des chirurgies réalisées en Pc payé par patient</div>
+                <div class="col-6">
+                    <input type="number" value="0" class="form-control" name="churg_Publique_cout_paye" id="" />
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">Chirurgie médicaux Remboursé</div>
+                <div class="col-8">
+                    <select class="form-control" name="churg_rembourse" id="">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coûtdes chirurgies payé par patien</div>
+                <div class="col-4">
+                    <input type="number" value="0" class="form-control" name="churg_rembourse_cout_paye" id="" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <h3> 6. Appareillage: </h3>
+        </div>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Non de l’appareil </th>
+                <th scope="col">Coût de l’appareil </th>
+                <th scope="col">Date d’achat </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for counter in 1..5  %}
+                <tr >
+                    <th >{{ counter }}</th>
+                    <td>
+                        <input type="text" placeholder="text ici" class="form-control" name="appareil_{{ counter }}" id="" />
+                    </td>
+                    <td>
+                        <input type="number" value="0" class="form-control" name="appareil_cout_{{ counter }}" id="" />
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" name="appareil_date_{{ counter }}" id="" />
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coût des appareils payé par patient</div>
+                <div class="col-4">
+                    <input type="number" value="0" class="form-control" name="appareils_cout_paye" id="" />
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="form-group" >
+            <h3> 7. Kinésithérapie: </h3>
+        </div>
+        <div class="form-group" >
+            <h4 class="text-primary"> 7.1. Au sein de l’HEY ou toute autre structure public: </h4>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">Si Oui</div>
+                <div class="col-2">Nb. de séances</div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="kine_hey_nb" id="" />
+                </div>
+                <div class="col-2">Prix</div>
+                <div class="col-2">
+                    <input type="number" value="40" class="form-control" name="kine_hey_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coût de Kinésithérapie du dernier semestre</div>
+                <div class="col-4">
+                    <input type="number" value="0" class="form-control" name="kine_hey_d_sem" id="" />
+                </div>
+            </div>
+        </div>        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coût de Kinésithérapie du dernier semestre</div>
+                <div class="col-4">
+                    <input type="number" value="0" class="form-control" name="kine_hey_pay_pat" id="" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <h4 class="text-primary"> 7.2. Au sein d’une structure privée: </h4>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">Si Oui</div>
+                <div class="col-2">Nb. de séances</div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="kine_prv_nb" id="" />
+                </div>
+                <div class="col-2">Prix</div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="kine_prv_prix" id="" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-2">Remboursé</div>
+                <div class="col-8">
+                    <select class="form-control" name="kine_rembourse" id="">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Coûtdes consultations en privépayé par patient après remboursemen</div>
+                <div class="col-4">
+                    <input type="number" value="0" class="form-control" name="Kine_rembourse_cout" id="" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <h3 > 8.Transport: </h3>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Ville d’habitat</div>
+                <div class="col-4">
+                    <input type="text" class="form-control" name="trs_ville_dahib" id="" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Coût des déplacements à l’hôpital</div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="cout_dep_1" id="" />
+                </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="cout_dep_2" id="" />
+                </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="cout_dep_3" id="" />
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Coût de toute autre déplacements pour consultations</div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="cout_dep_autre_1" id="" />
+                </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="cout_dep_autre_2" id="" />
+                </div>
+                <div class="col-2">
+                    <input type="number" value="0" class="form-control" name="cout_dep_autre_3" id="" />
+                </div>
+
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+</div>
+{% endblock %}

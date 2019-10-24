@@ -1,0 +1,17 @@
+.white-links a {
+    color: #FFFFFF;
+}
+.navbar{
+    padding: 5px 4em;
+    font-size: 15pt;
+}
+#header{
+    background-color: #0B7FC7;
+}
+.form-group label{
+    font-size: 0.8em;
+}
+.item-hover:hover{
+    background: #f5f5ff;
+    padding: 0.5em 0 0.5em 0;
+}

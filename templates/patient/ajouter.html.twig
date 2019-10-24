@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h3>Ajouter un nouveau patient </h3>
+
+    <p>
+        Veuiller remplir  les champs avec les infromations du patient
+    </p>
+
+    <form method="post" action="/patient/ajouterAction">
+        <div class="form-group">
+            <label>Nom Complet </label>
+            <input type="text" class="form-control" id="Nom" name="Nom" aria-describedby="Nom" placeholder="Nom">
+        </div>
+        <div class="form-group">
+            <label>Numero_Telephone</label>
+            <input type="text" class="form-control" id="Numerotel" name="Numerotel" aria-describedby="Numerotel" placeholder="Numerotel">
+        </div>
+        <div class="form-group">
+            <label>Nature de la maladie</label>
+            <select class="form-control"  name="Nature_Maladie" >
+                <option value="PR">PR</option>
+                <option value="SPA">SPA</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-3">
+                    <Label>Date de Naissance:</Label>
+                </div>
+                <div class="col-3">
+                    <select class="form-control"  name="naissance_jour" >
+                        <option  disabled selected>Jours</option>
+                        {% for i in 1..31 %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-3">
+                    <select class="form-control"  name="naissance_mois" >
+                        <option  disabled selected>mois</option>
+                        {% for i in 1..12 %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-3">
+                    <select class="form-control"  name="naissance_annee" >
+                        <option  disabled selected>Annee</option>
+                        {% for i in 2020..1950 %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Biotherapie_actuelle</label>
+            <input type="text" class="form-control"  name="biotherapie_actuelle" >
+        </div>
+        <div class="form-group">
+            <label>N° D’entrée</label>
+            <input type="text" class="form-control"  name="num_entre" >
+        </div>
+        <div class="form-group">
+            <label>N° d’inclusion</label>
+            <input type="text" class="form-control"  name="num_inclu" >
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6"><label>Sexe</label></div>
+                <div class="col-6">
+                    <select class="form-control"  name="sexe" >
+                        <option value="F">F</option>
+                        <option value="M">M</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Date d’inclusion</label>
+                <input type="date" class="form-control"  name="date_inclusion" >
+        </div>
+        <div class="form-group">
+            <label>Poids</label>
+                <input type="number" class="form-control"  name="poids" >
+        </div>
+        <div class="form-group">
+            <label>Taille</label>
+                <input type="number" class="form-control"  name="taille" >
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6"><label>Niveau d’études :</label></div>
+                <div class="col-6">
+                    <select class="form-control"  name="niv_etude" >
+                        <option value="Analphabète">Analphabète</option>
+                        <option value="Primaire">Primaire</option>
+                        <option value="Collège">Collège</option>
+                        <option value="Lycée">Lycée</option>
+                        <option value="universitai">universitai</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6"><label>Statut matrimonial :</label></div>
+                <div class="col-6">
+                    <select class="form-control"  name="situation_mat" >
+                        <option value="Célibataire">Célibataire</option>
+                        <option value="Marié(e)">Marié(e)</option>
+                        <option value=" Veuf(ve)"> Veuf(ve)</option>
+                        <option value="Divorcé(e">Divorcé(e</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Nombre d’enfants</label>
+            <input type="number" class="form-control"  name="nb_enf" >
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6"><label>Type d’assurance maladie :</label></div>
+                <div class="col-6">
+                    <select class="form-control"  name="type" >
+                        <option value="RAMED">RAMED</option>
+                        <option value="FAR">FAR</option>
+                        <option value="CNSS">CNSS</option>
+                        <option value="CNOPS">CNOPS</option>
+                        <option value="Privée">Privée</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label>Profession</label>
+            <input type="text" class="form-control"  name="profession" >
+        </div>
+        <div class="form-group">
+            <label>Ville</label>
+            <input type="text" class="form-control"  name="Vilee" >
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6"><label>rural/urbaine :</label></div>
+                <div class="col-6">
+                    <select class="form-control"  name="rural_urbain" >
+                        <option value="rural">Rural</option>
+                        <option value="urbain">Urbain</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6"><label>Salarié :</label></div>
+                <div class="col-6">
+                    <select class="form-control"  name="salarie" >
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6"><label>Revenu des ménages :</label></div>
+                <div class="col-6">
+                    <select class="form-control"  name="revenue_des_menages" >
+                        <option value=" < 2500 ">   < 2500  </option>
+                        <option value="Entre 2500 et 5000 dh">Entre 2500 et 5000 dh</option>
+                        <option value=" >5000 dhs ">   >5000 dhs  </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+</div>
+{% endblock %}

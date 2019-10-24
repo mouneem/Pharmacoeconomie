@@ -1,0 +1,33 @@
+{# templates/base.html.twig #}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    {#    <link rel="stylesheet" href="/css/bootstrap.min.css">#}
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/all.css">
+        <link rel="stylesheet" href="/css/global.min.css">
+        <title>{% block title %}Questionaire Médicale{% endblock %}</title>
+    </head>
+    <body class="bg-dark">
+        <div id="header" class="header w-100 text-center p-4 text-white">
+            <h3><a href="#" class="text-white">Questionaire Médicale</a> </h3>
+        </div>
+        <nav id="navbar" class="bg-primary white-links navbar">
+            <a href="/">Home</a> <a href="/survey">Questionaires</a> <a href="/patient">Patient</a> 
+        </nav>
+        <div class="mt-4 bg-white mb-2 container ">
+            <div class="row">
+                <div class="col-1 text-center">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="col-11 text-center">
+                    <input class="w-100">
+                </div>
+            </div>
+        </div>
+        <div id="content" class="container bg-white mt-4 p-4 ">
+            {% block body %}{% endblock %}
+        </div>
+    </body>
+</html>

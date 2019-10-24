@@ -1,0 +1,921 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<div class="example-wrapper">
+    <h2>Questionaire: Enquête Pharmacoépidémiologique </h2>
+
+    <p>
+        Veuiller remplir  les champs avec les infromations du patient
+    </p>
+
+    <form method="post" action="/survey/pharmacoepido/calcul">
+        <div class="form-group">
+            <label>Patient</label>
+            <select name="patient_id" class="form-control" id="patient_id">
+                {% for item in patients %}
+                    <option value="{{ item.id }}">{{ item.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <hr>
+        <div class="form-group" >
+            <h4 >1.Caractéristiques et gravité de la PR:</h4>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Date du début des symptômes</div>
+                <div class="col-6">
+                    <input name="garavite_pr_date_debut" type="date" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Date du Diagnostic</div>
+                <div class="col-6">
+                    <input name="garavite_pr_date_diagno" type="date" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-12">Facteurs rhumatoïdes</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Séropositif</div>
+                <div class="col-6">
+                    <select name="garavite_pr_Séropositif"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Séronégatif</div>
+                <div class="col-6">
+                    <select name="garavite_pr_Séronégatif"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">DM</div>
+                <div class="col-6">
+                    <select name="garavite_pr_DM"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Antécédent de chirurgie à cause de la PR</div>
+                <div class="col-6">
+                    <select name="garavite_pr_Antecedent_de_Chirurgie"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Nbr de remplacement Articulaires</div>
+                <div class="col-4">
+                    <input name="garavite_pr_Nb_Articulaires_1" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="garavite_pr_Nb_Articulaires_2" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Lieu du remplacement Articulaires</div>
+                <div class="col-4">
+                    <input name="garavite_pr_lieu_Articulaires" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Date du remplacement</div>
+                <div class="col-4">
+                    <input name="garavite_pr_date_Articulaires" type="DATE" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <h4 class="text-primary">Activité de la maladie le jour de la visite</h4>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Nombre d’articulations douloureuses</div>
+                <div class="col-4">
+                    <input name="garavite_pr_Nb_Articulaires_douleureuse_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="garavite_pr_Nb_Articulaires_douleureuse_2" value="28" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Nombre d’articulations gonflés</div>
+                <div class="col-4">
+                    <input name="garavite_pr_Nb_Articulaires_gonf_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="garavite_pr_Nb_Articulaires_gonf_2" value="28" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">VS(1st H)</div>
+                <div class="col-4">
+                    <input name="garavite_pr_VS1stH_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="garavite_pr_VS1stH_2" value="0" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">CRP mg/d</div>
+                <div class="col-2">
+                    <input name="garavite_pr_CRP_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="garavite_pr_CRP_2" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="garavite_pr_CRP_3" value="0" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">EVA douleur</div>
+                <div class="col-2">
+                    <input name="garavite_pr_EVA_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="garavite_pr_EVA_2" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="garavite_pr_EVA_3" value="10" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">EVA_Fatigue</div>
+                <div class="col-2">
+                    <input name="garavite_pr_EVA_Fatigue_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="garavite_pr_EVA_Fatigue_2" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="garavite_pr_EVA_Fatigue_3" value="10" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">DAS28</div>
+                <div class="col-4">
+                    <input name="garavite_pr_DAS28_1" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="garavite_pr_DAS28_2" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            <h4 class="text-primary">Activité de la maladie avant la dernière Biothérapie</h4>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Date</div>
+                <div class="col-4">
+                    <input name="garavite_pr_avant_Nb_Date" type="Date" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Nombre d’articulations douloureuses</div>
+                <div class="col-4">
+                    <input name="garavite_pr_avant_Nb_Articulaires_douleureuse_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="garavite_pr_avant_Nb_Articulaires_douleureuse_2" value="28" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Nombre d’articulations gonflés</div>
+                <div class="col-4">
+                    <input name="garavite_pr_avant_Nb_Articulaires_gonf_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="garavite_pr_avant_Nb_Articulaires_gonf_2" value="28" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">VS(1st H)</div>
+                <div class="col-4">
+                    <input name="garavite_pr_avant_VS1stH_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="garavite_pr_avant_VS1stH_2" value="0" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">CRP mg/d</div>
+                <div class="col-2">
+                    <input name="garavite_pr_avant_CRP_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="garavite_pr_avant_CRP_2" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="garavite_pr_avant_CRP_3" value="0" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">EVA douleur</div>
+                <div class="col-2">
+                    <input name="garavite_pr_avant_EVA_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="garavite_pr_avant_EVA_2" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="garavite_pr_avant_EVA_3" value="10" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">EVA_Fatigue</div>
+                <div class="col-2">
+                    <input name="garavite_pr_avant_EVA_Fatigue_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="garavite_pr_avant_EVA_Fatigue_2" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="garavite_pr_avant_EVA_Fatigue_3" value="10" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">DAS28</div>
+                <div class="col-4">
+                    <input name="garavite_pr_avant_DAS28_1" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="garavite_pr_avant_DAS28_2" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            <h3 class="text-default">3. Caractéristiques et gravité de (SPA)</h4>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Date du début des symptômes</div>
+                <div class="col-4">
+                    <input name="SPA_date_debut" type="Date" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Date du Diagnostic</div>
+                <div class="col-4">
+                    <input name="SPA_date_diag" type="Date" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Antécédent de chirurgie à cause du SP</div>
+                <div class="col-6">
+                    <select name="SPA_Antécédent_chirurgie_PR"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Nbr de remplacement Articulaires</div>
+                <div class="col-4">
+                    <input name="SPA_remplaceemnt_aticulaires_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="SPA_remplaceemnt_aticulaires_2" value="0" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Lieu du remplacement Articulaires</div>
+                <div class="col-4">
+                    <input name="SPA_lieu_Articulaires" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Date du remplacement</div>
+                <div class="col-4">
+                    <input name="SPA_date_Articulaires" type="DATE" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h4 class="text-primary ">3.1. Activité du SPA le jour de la visite</h4>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Atteinte axial</div>
+                <div class="col-6">
+                    <select name="SPA_Att_Axial"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Atteinte articulaire périphérique</div>
+                <div class="col-6">
+                    <select name="SPA_Art_per"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Psoriasis Cutané</div>
+                <div class="col-6">
+                    <select name="SPA_psor_cut"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Atteinte Oculaire</div>
+                <div class="col-6">
+                    <select name="SPA_att_occ"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Atteinte intestinale</div>
+                <div class="col-6">
+                    <select name="SPA_att_int"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Nombre d’articulations douloureuses</div>
+                <div class="col-4">
+                    <input name="SPA_Nb_Articulaires_douleureuse_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="SPA_Nb_Articulaires_douleureuse_2" value="28" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Nombre d’articulations gonflés</div>
+                <div class="col-4">
+                    <input name="SPA_Nb_Articulaires_gonf_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="SPA_Nb_Articulaires_gonf_2" value="28" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">VS(1st H)</div>
+                <div class="col-4">
+                    <input name="SPA_VS1stH_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="SPA_VS1stH_2" value="0" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">CRP mg/d</div>
+                <div class="col-2">
+                    <input name="SPA_CRP_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="SPA_CRP_2" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="SPA_CRP_3" value="0" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">BASFI</div>
+                <div class="col-2">
+                    <input name="SPA_BASFI_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="SPA_BASFI_2" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="SPA_BASFI_3" value="10" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">BASDAI</div>
+                <div class="col-2">
+                    <input name="SPA_BASDAI_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="SPA_BASDAI_2" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="SPA_BASDAI_3" value="10" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="form-group">
+            <h4 class="text-primary ">3.2.  Activité du SPA avant la dernière Biothérapie</h4>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Date</div>
+                <div class="col-6">
+                    <input name="SPA_avant_date"  type="date" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Atteinte axial</div>
+                <div class="col-6">
+                    <select name="SPA_Avant_Att_Axial"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Atteinte articulaire périphérique</div>
+                <div class="col-6">
+                    <select name="SPA_Avant_Art_per"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Psoriasis Cutané</div>
+                <div class="col-6">
+                    <select name="SPA_Avant_psor_cut"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Atteinte Oculaire</div>
+                <div class="col-6">
+                    <select name="SPA_Avant_att_occ"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-6">Atteinte intestinale</div>
+                <div class="col-6">
+                    <select name="SPA_Avant_att_int"  class="form-control">
+                        <option>Oui</option>
+                        <option>Non</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Nombre d’articulations douloureuses</div>
+                <div class="col-4">
+                    <input name="SPA_Avant_Nb_Articulaires_douleureuse_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="SPA_Avant_Nb_Articulaires_douleureuse_2" value="28" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Nombre d’articulations gonflés</div>
+                <div class="col-4">
+                    <input name="SPA_Avant_Nb_Articulaires_gonf_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="SPA_Avant_Nb_Articulaires_gonf_2" value="28" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">VS(1st H)</div>
+                <div class="col-4">
+                    <input name="SPA_Avant_VS1stH_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="SPA_Avant_VS1stH_2" value="0" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">CRP mg/d</div>
+                <div class="col-2">
+                    <input name="SPA_Avant_CRP_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="SPA_Avant_CRP_2" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="SPA_Avant_CRP_3" value="0" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">BASFI</div>
+                <div class="col-2">
+                    <input name="SPA_Avant_BASFI_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="SPA_Avant_BASFI_2" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="SPA_Avant_BASFI_3" value="10" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">BASDAI</div>
+                <div class="col-2">
+                    <input name="SPA_Avant_BASDAI_1" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="SPA_Avant_BASDAI_2" value="0" type="number" class="form-control">
+                </div>
+                <div class="col-2">
+                    <input name="SPA_Avant_BASDAI_3" value="10" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="form-group">
+            <h3 class="text-default">4. Thérapies utilisées</h4>
+        </div>
+        <div class="form-group">
+            <h4 class="text-primary">4.1 Biothérapie</h4>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Biothérapie 1</div>
+                <div class="col-4">
+                    <input name="Biothérapie_1" value="0" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Date de début du Biothérapie 1</div>
+                <div class="col-4">
+                    <input name="Date_Biothérapie_1" value="0" type="date" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Date d’arrêt du Biothérapie 1</div>
+                <div class="col-4">
+                    <input name="Datearrêt_Biothérapie_1" value="0" type="date" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Motif d’arrêt du Biothérapie 1</div>
+                <div class="col-4">
+                    <input name="Biothérapie_1" value="0" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <h4 class="text-primary">4.1 DMARDS</h4>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">DMARDS en cours</div>
+                <div class="col-4">
+                    <input name="DMARDS_1" value="0" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">DMARDS</th>
+                <th scope="col">Date de début</th>
+                <th scope="col">Date d’arrêt</th>
+                <th scope="col">Motif d’arrêt</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in 1..5  %}
+                <tr>
+                    <th >{{ i }}</th>
+                    <td>
+                        <input type="text" placeholder="text ici" class="form-control" name="DMARDS_Nom_{{ i }}"  />
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" name="DMARDS_date_debut_{{ i }}"  />
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" name="DMARDS_date_arret_{{ i }}"  />
+                    </td>
+                    <td>
+                        <input type="text" placeholder="text ici" class="form-control" name="DMARDS_Motif_Arret_{{ i }}"  />
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+        <div class="form-group">
+            <h4 class="text-primary">4.2 Antalgiques et AINS</h4>
+        </div>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Antalgique/AINS</th>
+                <th scope="col">Dose /J</th>
+                <th scope="col">Fréquence/semaine</th>
+                <th scope="col">Date début</th>
+                <th scope="col">Date d'arrêt</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in 1..5  %}
+                <tr>
+                    <th >{{ i }}</th>
+                    <td>
+                        <input type="text" placeholder="text ici" class="form-control" name="DMARDS_Nom_{{ i }}"  />
+                    </td>
+                    <td>
+                        <input type="Number" value="0" class="form-control" name="DMARDS_Motif_Arret_{{ i }}"  />
+                    </td>
+                    <td>
+                        <input type="text" placeholder="text ici" class="form-control" name="DMARDS_Motif_Arret_{{ i }}"  />
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" name="DMARDS_date_debut_{{ i }}"  />
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" name="DMARDS_date_arret_{{ i }}"  />
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-12">Comorbidités</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Diabète</div>
+                <div class="col-3"><select class="form-control" name="ComorbiditésDiabète"> <option>Oui</option> <option>Non</option> </select> </div>
+                <div class="col-3">TTT</div>
+                <div class="col-3"><select class="form-control" name="ComorbiditésDiabèteTTT"> <option>Oui</option> <option>Non</option> </select> </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">HTA</div>
+                <div class="col-3"><select class="form-control" name="ComorbiditésHTA"> <option>Oui</option> <option>Non</option> </select> </div>
+                <div class="col-3">TTT</div>
+                <div class="col-3"><select class="form-control" name="ComorbiditésHTATTT"> <option>Oui</option> <option>Non</option> </select> </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Hypercholestérolémie</div>
+                <div class="col-3"><select class="form-control" name="ComorbiditésHypercholestérolémie"> <option>Oui</option> <option>Non</option> </select> </div>
+                <div class="col-3">TTT</div>
+                <div class="col-3"><select class="form-control" name="ComorbiditésHypercholestérolémieTTT"> <option>Oui</option> <option>Non</option> </select> </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Hypertriglycéridémie</div>
+                <div class="col-3"><select class="form-control" name="ComorbiditésHypertriglycéridémie"> <option>Oui</option> <option>Non</option> </select> </div>
+                <div class="col-3">TTT</div>
+                <div class="col-3"><select class="form-control" name="ComorbiditésHypertriglycéridémieTTT"> <option>Oui</option> <option>Non</option> </select> </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Autre</div>
+                <div class="col-3"><input class="form-control" type="text" name="ComorbiditésAutre"> </div>
+                <div class="col-2">TTT</div>
+                <div class="col-3"><select class="form-control" name="ComorbiditésAutreTTT"> <option>Oui</option> <option>Non</option> </select> </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <h4 class="text-primary">Apparition d’effets indésirables au cours de la Biothérapie</h4>
+        </div>
+
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Maladie</th>
+                <th scope="col">Date du Dc</th>
+                <th scope="col">Date de guérison</th>
+                <th scope="col">Remarque</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in  ['Tuberculose','Hépatite_B','Hépatite_C','Réaction_cutanée','Réaction_à_la_perfusion','Réaction_après_la_perfusion','Démyélinisation_cérébrale','Autres']  %}
+                <tr>
+                    <th >{{ i }}</th>
+                    <td>
+                        <input type="date" class="form-control" name="Date_DC_{{ i }}"  />
+                    </td>
+                    <td>
+                        <input type="date"  placeholder="text ici" class="form-control" name="Datte_guérison_{{ i }}"  />
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Text ici" class="form-control" name="Remarque_{{ i }}"  />
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+        <div class="form-group">
+            <h3 >Autres maladies associées Diagnostiquées</h3>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Dépression</div>
+                <div class="col-3"><select class="form-control" name="AutresDépression"> <option>Oui</option> <option>Non</option> </select> </div>
+                <div class="col-3">TTT</div>
+                <div class="col-3"><input type="date" class="form-control" name="AutresDépressionDate">  </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Ostéoporose</div>
+                <div class="col-3"><select class="form-control" name="AutresOstéoporose"> <option>Oui</option> <option>Non</option> </select> </div>
+                <div class="col-3">TTT</div>
+                <div class="col-3"><input type="date" class="form-control" name="AutresOstéoporoseDate">  </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Fibromyalgie</div>
+                <div class="col-3"><select class="form-control" name="AutresFibromyalgie"> <option>Oui</option> <option>Non</option> </select> </div>
+                <div class="col-3">TTT</div>
+                <div class="col-3"><input type="date" class="form-control" name="AutresFibromyalgieDate">  </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-3">Autres</div>
+                <div class="col-3"><input type="date" class="form-control" name="AutresAutres"> </div>
+                <div class="col-3">TTT</div>
+                <div class="col-3"><input type="date" class="form-control" name="AutresAutresDate">  </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <h3 >Remarques et Autres</h3>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <textarea class="form-control" name="remarque_form" ></textarea>
+            </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+</div>
+{% endblock %}

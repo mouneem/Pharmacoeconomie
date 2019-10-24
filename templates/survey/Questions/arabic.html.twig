@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<div class="example-wrapper text-right">
+
+    <p>
+        ‫دیر‬‬ ‫عافاك   ‫على‬ ‫مربّع‬ ‫واحْ‬ ‫د‬ ‫ْ‬ ‫ف‬ ‫كل‬ ‫مجموعة‬ ‫دٍیا‬ ‫ل‬ ‫األجوبة‬ ‫ْ‬ ‫و‬ ‫اللّي‬ ‫كایْوافق‬ ‫حالتك‬ ‫الصّحیة‬ ‫دْیال‬ ‫الیوم‬ ‫‪.‬‬
+    </p>
+
+    <form method="post" action="/survey/arabic/calcul">
+        <div class="form-group">
+            <label>Patient</label>
+            <select name="patient_id" class="form-control" id="patient_id">
+                {% for item in patients %}
+                    <option value="{{ item.id }}">{{ item.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <hr>
+        <div class="form-group" >
+            <h4 >‫الحركة‬ ‫و‬ ‫ا‬ل‬‫م‬‫شٍي‬</h4>
+        </div>
+        <div class="form-group">
+            <select name="1" class="form-control">
+                <option>‫ما‬ ‫عْنذي‬ ‫حت‫ى‬‬ مشاكل ‫ْ‬ في المشي ‫ّ‬</option>
+                <option>‫عْنذي‬ ‫ديال‬ ‫المشاكل‬ ‫ْ‬ ‫شوية فلمشي</option>
+                <option>‫أنا‬ ‫قاب‬ظ الفراش </option>
+            </select>
+        </div>
+
+
+        <div class="form-group" >
+            <h4 >تقد براسك و تقاد حالتك </h4>
+        </div>
+        <div class="form-group">
+            <select name="2" class="form-control">
+                <option> نقدر نقابل راسي بوحدي بلا مشاكل  </option>
+                <option> عندي شوية ديال المشاكل فالغسيل و لبيس الحوايج </option>
+                <option> ما كاتقدرش نغسل و نلبس حوايجي بوحدي </option>
+            </select>
+        </div>
+
+
+        <div class="form-group" >
+            <h4> الانشطة اليومية </h4>
+        </div>
+        <div class="form-group">
+            <select name="3" class="form-control">
+                <option> ما عندي حتى مشكل في الانشطة ديالي اليومية  </option>
+                <option> عندي شوية ديال لمشاكل في الانشطة اليومية </option>
+                <option> ما كانقدرش ندير الانشطة ديالي اليومية  </option>
+            </select>
+        </div>
+
+
+        <div class="form-group" >
+            <h4> الحريق \ الراحة فالدات </h4>
+        </div>
+        <div class="form-group">
+            <select name="4" class="form-control">
+                <option> ما فياش الحريق و مرتاح فداتي </option>
+                <option> فيا شوية ديال لحريق و مامرتاحش فداتي </option>
+                <option> فيا بزاف ديال الحريق و مامرتاحش فداتي </option>
+            </select>
+        </div>
+
+        <div class="form-group" >
+            <h4> القلق \ الاكتئاب </h4>
+        </div>
+        <div class="form-group">
+            <select name="5" class="form-control">
+                <option> ما مقلق ما مكتائب </option>
+                <option> مقلق و مكتائب شوية </option>
+                <option> مقلق و مكتائب بزاف </option>
+            </select>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+</div>
+{% endblock %}

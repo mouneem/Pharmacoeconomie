@@ -1,0 +1,333 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<div class="example-wrapper">
+    <h2>Couts indirects liés Aux Rhumatismes Inflammatoires chroniques </h2>
+
+    <p>
+        Veuiller remplir  les champs avec les infromations du patient
+    </p>
+
+    <form method="post" action="/survey/coutindirect/calcul">
+        <div class="form-group">
+            <label>Patient</label>
+            <select name="patient_id" class="form-control" id="patient_id">
+                {% for item in patients %}
+                    <option value="{{ item.id }}">{{ item.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <hr>
+        <div class="form-group" >
+            <h4 >Salarié</h4>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Secteur d’activité</div>
+                <div class="col-6">
+                    <select name="salarie_sa" class="form-control">
+                        <option value="Public">Public</option>
+                        <option value="Privé">Privé</option>
+                        <option value="Liberal">Liberal</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Proffesion</div>
+                <div class="col-6">
+                    <input name="salarieProffesion" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Salaire mensuel en Dhs</div>
+                <div class="col-4">
+                    <input name="salarie_mensuel_en_dh_1" type="text" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="salarie_mensuel_en_dh_2" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Tranche salariale</div>
+                <div class="col-6">
+                    <select name="salarie_salariale" class="form-control">
+                        <option value="- 2500">- 2500 DH</option>
+                        <option value="+ 2500">+ 2500</option>
+                        <option value="+ 5000">+ 5000</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Nbr d’absence ce dernier mois :</div>
+                <div class="col-4">
+                    <input name="salarie_nb_abs_1" type="text" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="salarie_nb_abs_2" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Quelle est la moyenne de vos absences mensuelles :</div>
+                <div class="col-4">
+                    <input name="salarie_moy_abs_1" type="text" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="salarie_moy_abs_2" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Coûts estimé perdu à cause de l’absence du dernier semestre :</div>
+                <div class="col-4">
+                    <input name="salarie_est_perte_abs_1" type="text" class="form-control">
+                </div>
+                <div class="col-4">
+                    <input name="salarie_est_perte_abs_2" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <h4 >Non salarié</h4>
+        </div>
+
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Secteur d’activité</div>
+                <div class="col-6">
+                    <select name="non_salarie_sa" class="form-control">
+                        <option value="Etudiant">Etudiant</option>
+                        <option value="Travail associatif">Travail associatif</option>
+                        <option value="Non Travailleurs">Non Travailleurs</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Proffesion</div>
+                <div class="col-6">
+                    <input name="NonsalarieProffesion" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Aviez-vous arrêter de travailler à cause de la maladie :</div>
+                <div class="col-6">
+                    <select name="non_salarie_sa" class="form-control">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Quel était votre revenu mensuel avant la maladie ?</div>
+                <div class="col-6">
+                    <input name="Nonsalarie_rev_men" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Quel est votre revenu actuel après la maladie ?</div>
+                <div class="col-6">
+                    <input name="Nonsalarie_rev_men_act" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="form-group" >
+            <h4 >Tâches domestiques et Loisirs :</h4>
+        </div>
+
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Etes-vous capables de réaliser vos taches usuelles seule :</div>
+                <div class="col-6">
+                    <select name="non_salarie_tache_capable_tache_us" class="form-control">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non </option>
+                        <option value="un peu">un peu </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Exerciez-vous une activité sportive ou un travail associatif ::</div>
+                <div class="col-6">
+                    <select name="non_salarie_tache_exrc" class="form-control">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Lequel :</div>
+                <div class="col-6">
+                    <input name="Lequel" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">L’aviez-vous arrêté à cause de la maladie :</div>
+                <div class="col-6">
+                    <select name="non_salarie_arret_maladie" class="form-control">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Coût estimé de perte liée à la maladie</div>
+                <div class="col-6">
+                    <select name="non_salarie_cout_estme_maladie" class="form-control">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group" >
+            <h4 >Nécessité d’une tierce personne :</h4>
+        </div>
+
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Nécessité d’une tierce personne pour s’occuper de vous</div>
+                <div class="col-6">
+                    <select name="tierce_necesiitee" class="form-control">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Est-elle bénévole</div>
+                <div class="col-6">
+                    <select name="benevole" class="form-control">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Rémunérée</div>
+                <div class="col-6">
+                    <select name="rémunérée" class="form-control">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">à Combien par jour en Dhs :</div>
+                <div class="col-6">
+                    <input name="a_Combien" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Si bénévole ; Lien de parenté</div>
+                <div class="col-6">
+                    <input name="lien_parenté" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">A-t- elle quitté une activité pour s’occuper de vous :</div>
+                <div class="col-6">
+                    <select name="quittéactivité" class="form-control">
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Laquelle</div>
+                <div class="col-6">
+                    <input name="quittéactivitéLaquelle" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Coût estimé dépensée par la tierce personne par mois</div>
+                <div class="col-6">
+                    <input name="Coûtestimédépenséetiercepersonne" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row item-hover">
+                <div class="col-4">Avez-vous des commentaires ou des remarques sur les budgets dépensés pour la maladie.</div>
+                <div class="col-6">
+                    <input name="commentaires" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+
+    <div class="example-wrapper">
+        <h3>Liste des Questionaires </h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Titre</th>
+                <th  class="text-center" scope="col">Exporter Les Reponses </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in Surveys %}
+                <tr>
+                    <td>{{item.getId()}}</td>
+                    <td><a href="{{item.getLink()}}">{{item.getTitre()}}</a> </td>
+                    <td class="text-center"><a href="/exporter/survey/{{item.getId()}}"> <i class="fas fa-save"></i> </a></td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="example-wrapper">
+        <h3>Liste des reponses </h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Patient</th>
+                <th scope="col">Questionaire</th>
+                <th scope="col">Date</th>
+                <th scope="col">Exporter La Reponses </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in answers %}
+                <tr>
+                    <td>{{item.getId()}}</td>
+                    <td>#{{item.getPatient.getId()}} {{item.getPatient.getNom()}}</td>
+                    <td><a href="{{item.getSurvey.getLink()}}">{{item.getSurvey.getTitre()}}</a> </td>
+                    <td><a href="#{{item.getDate()}}">{{item.getDate()}}</a></td>
+                    <td class="text-center"><a href="/exporter/answer/{{item.getId()}}"> <i class="fas fa-save"></i> </a></td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

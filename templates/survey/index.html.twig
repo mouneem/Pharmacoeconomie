@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Lien</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in Surveys %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.titre }}</td>
+                <td><a href="{{ item.link }}">Remplir</a> </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="8" class="text-center"> <h5><a href="/survey/ajouter">Ajouter un survey</a> </h5> </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+{% endblock %}
